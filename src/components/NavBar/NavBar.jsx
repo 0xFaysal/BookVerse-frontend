@@ -5,7 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import {BsMoonStarsFill} from "react-icons/bs";
 import {PiSunBold} from "react-icons/pi";
 import {Tooltip} from "react-tooltip";
-// import {AuthContext} from "../../provider/AuthProvider";
+import {AuthContext} from "../../Provider/AuthProvider";
 
 function Navbar() {
     //Theme and Navbar Style
@@ -72,17 +72,15 @@ function Navbar() {
                 <NavLink to='/'>Home</NavLink>
             </li>
             <li>
-                <NavLink to='/tourist_spots'>Tourist Spots</NavLink>
+                <NavLink to='/all-book'>All Book</NavLink>
             </li>
             {user ? (
                 <>
                     <li>
-                        <NavLink to={"/add_tourist_spot"}>
-                            Add Tourists Spot
-                        </NavLink>
+                        <NavLink to={"/add_tourist_spot"}></NavLink>
                     </li>
                     <li>
-                        <NavLink to={"/my_list"}>My List</NavLink>
+                        <NavLink to={"/my_list"}>Borrowed Books</NavLink>
                     </li>
                 </>
             ) : null}
@@ -92,7 +90,7 @@ function Navbar() {
     return (
         <div
             className={` w-full transition z-50 top-0 ${
-                navbarBackground ? "bg-primary" : ""
+                navbarBackground ? "bg-base-200" : ""
             }${visible ? " fixed" : " absolute"}`}
         >
             <div className='navbar top-0 px-8'>
@@ -127,13 +125,8 @@ function Navbar() {
                     </div>
                     <Link to='/'>
                         <div className='flex items-center justify-center'>
-                            <img
-                                src='./favicon.svg'
-                                alt='logo'
-                                className='w-16'
-                            />
-                            <h1 className='font-raleway text-2xl uppercase text-base-content  font-bold'>
-                                Travelism
+                            <h1 className='font-cormorant-garamond text-3xl uppercase text-base-content  font-bold'>
+                                BOOKVERSE
                             </h1>
                         </div>
                     </Link>

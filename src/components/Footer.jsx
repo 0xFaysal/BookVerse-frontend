@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 function Footer() {
     return (
         <>
@@ -5,43 +7,77 @@ function Footer() {
                 <div className='flex container mx-auto justify-around text-textPrimary flex-wrap gap-y-6'>
                     <aside className='text-btnSecondary '>
                         <img
-                            src='./favicon.svg'
+                            src='./logo-2.svg'
                             alt='logo'
                             className='w-24 ml-10'
                         />
                         <div>
-                            <h1 className='font-bold text-3xl'>TRAVELISM</h1>
-                            <p>Travel far, wander often.</p>
+                            <h1 className='font-bold text-3xl font-cormorant-garamond'>
+                                BOOKVERSE
+                            </h1>
+                            <p>The world of Knowledge.</p>
                         </div>
                     </aside>
                     <div className='grid lg:grid-cols-4 grid-cols-2 gap-16'>
                         <nav className='flex flex-col gap-y-2'>
                             <h6 className='footer-title'>Services</h6>
-                            <a className='link link-hover'>Branding</a>
-                            <a className='link link-hover'>Design</a>
-                            <a className='link link-hover'>Marketing</a>
-                            <a className='link link-hover'>Advertisement</a>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Branding
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Design
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Query
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Volunteer
+                            </Link>
                         </nav>
                         <nav className='flex flex-col gap-y-2'>
                             <h6 className='footer-title'>Company</h6>
-                            <a className='link link-hover'>About us</a>
-                            <a className='link link-hover'>Contact</a>
-                            <a className='link link-hover'>Jobs</a>
-                            <a className='link link-hover'>Press kit</a>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                About us
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Contact
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Jobs
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Press kit
+                            </Link>
                         </nav>
                         <nav className='flex flex-col gap-y-2'>
                             <h6 className='footer-title'>Legal</h6>
-                            <a className='link link-hover'>Terms of use</a>
-                            <a className='link link-hover'>Privacy policy</a>
-                            <a className='link link-hover'>Cookie policy</a>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Terms of use
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Privacy policy
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Cookie policy
+                            </Link>
                         </nav>
                         <nav className='flex flex-col gap-y-2'>
                             <h6 className='footer-title'>RESOURCES</h6>
-                            <a className='link link-hover'>Blog</a>
-                            <a className='link link-hover'>Guides</a>
-                            <a className='link link-hover'>FAQ</a>
-                            <a className='link link-hover'>Help</a>
-                            <a className='link link-hover'>Center</a>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Blog
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Guides
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                FAQ
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Help
+                            </Link>
+                            <Link to='/coming-soon' className='link link-hover'>
+                                Center
+                            </Link>
                         </nav>
                     </div>
                 </div>
@@ -49,7 +85,8 @@ function Footer() {
                 <div className='footer items-center p-10 container mx-auto'>
                     <aside className='items-center grid-flow-col justify-self-center md:justify-self-start'>
                         <p className='text-textPrimary'>
-                            Copyright © 2024 - All right reserved
+                            Copyright © 2024 - All right reserved - Faysal Ahmed
+                            Fahim
                         </p>
                     </aside>
                     <nav className='grid-flow-col justify-self-center gap-4 md:place-self-center md:justify-self-end'>
