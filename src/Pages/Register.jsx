@@ -1,13 +1,21 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import bgimg from "/bg-register.svg";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {toast, ToastContainer} from "react-toastify";
 
 import {FaEye, FaEyeSlash, FaCheckCircle} from "react-icons/fa";
+import {AuthContext} from "../Provider/AuthProvider";
 
 function Register() {
     const [imagePreview, setImagePreview] = useState(null);
     const [password, setPassword] = useState("");
     const [photourl, setPhotourl] = useState("");
+
+    const {signInWithGoogle, signInWithGithub} = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    console.log(location);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -18,6 +26,35 @@ function Register() {
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    //Google Sign In
+    const handleGoogleSignIn = () => {
+        console.log("Google Sign In");
+        signInWithGoogle()
+            .then(() => {
+                if (location.state?.from) {
+                    navigate(location.state.from);
+                } else {
+                    navigate("/");
+                }
+            })
+            .catch((error) => {
+                toast.error("Google Sign In Failed");
+                console.log(error);
+            });
+    };
+
+    //Github Sign In
+    const handleGithubSignIn = () => {
+        console.log("Github Sign In");
+        signInWithGithub()
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     //Form Submission
@@ -35,6 +72,7 @@ function Register() {
             console.log("Photo is URL");
         }
         console.log(name, email, photo, password);
+        toast.success("Form Submitted");
     };
 
     //Password validation
@@ -85,7 +123,10 @@ function Register() {
                         </h1>
                         <div className='w-full flex-1 mt-8'>
                             <div className='flex flex-col items-center'>
-                                <button className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'>
+                                <button
+                                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'
+                                    onClick={handleGoogleSignIn}
+                                >
                                     <div className='bg-white p-2 rounded-full'>
                                         <svg
                                             className='w-4'
@@ -114,7 +155,10 @@ function Register() {
                                     </span>
                                 </button>
 
-                                <button className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'>
+                                <button
+                                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
+                                    onClick={handleGithubSignIn}
+                                >
                                     <div className='bg-white p-1 rounded-full'>
                                         <svg
                                             className='w-6'
@@ -308,6 +352,7 @@ function Register() {
                     ></div>
                 </div>
             </div>
+            <ToastContainer />
         </section>
     );
 }

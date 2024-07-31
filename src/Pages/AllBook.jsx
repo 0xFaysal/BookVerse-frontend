@@ -1,5 +1,5 @@
 function AllBook() {
-    return <div>AllBook</div>;
+    return <div className='w-full h-screen'>AllBook</div>;
 }
 
 export default AllBook;

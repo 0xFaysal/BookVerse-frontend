@@ -1,0 +1,8 @@
+.hero-h1 {
+    background: transparent;
+    color: white;
+    /* -webkit-text-stroke-color: black; */
+    /* -webkit-text-stroke-width: 4px; */
+    mix-blend-mode: difference;
+    z-index: 100;
+}

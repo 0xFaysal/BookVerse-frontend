@@ -9,20 +9,32 @@ import {AuthContext} from "../../Provider/AuthProvider";
 
 function Navbar() {
     //Theme and Navbar Style
-    const [theme, setTheme] = useState("dark");
-    const [navbarBackground, setNavbarBackground] = useState(false);
+    // const [theme, setTheme] = useState("light");
     const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+    const [navbarBackground, setNavbarBackground] = useState(false);
     const [visible, setVisible] = useState(true);
 
-    const {user, signOutUser} = useContext(AuthContext);
+    const {user, signOutUser, theme, setTheme} = useContext(AuthContext);
 
     //theme handler
     const handleThemeChange = () => {
         setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+        localStorage.setItem("theme", theme === "light" ? "dark" : "light");
     };
 
     useEffect(() => {
-        document.documentElement.setAttribute("data-theme", theme);
+        if (localStorage.getItem("theme")) {
+            setTheme(localStorage.getItem("theme"));
+        } else {
+            localStorage.setItem("theme", "light");
+            setTheme("light");
+        }
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            localStorage.getItem("theme")
+        );
     }, [theme]);
 
     // Navbar background Handler
@@ -89,10 +101,12 @@ function Navbar() {
 
     return (
         <div
-            className={` w-full transition z-50 top-0 ${
-                navbarBackground ? "bg-base-200" : ""
-            }${visible ? " fixed" : " absolute"}`}
+            className={`navBar  ${
+                navbarBackground ? "nav-sticky" : "bg-transparent"
+            }`}
         >
+            {/* {console.log(navbarBackground)} */}
+            {/* {console.log(`translate-y-[${Math.round(prevScrollPos)}rem]`)} */}
             <div className='navbar top-0 px-8'>
                 <div className='navbar-start'>
                     <div className='dropdown max-md:hidden block'>
@@ -118,7 +132,7 @@ function Navbar() {
                         </div>
                         <ul
                             tabIndex={0}
-                            className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
+                            className='menu menu-sm menu-li dropdown-content mt-0 z-[1] p-2 shadow bg-base-100 rounded-sm w-52'
                         >
                             {navItem}
                         </ul>
@@ -149,13 +163,13 @@ function Navbar() {
                     </button>
                     {!user ? (
                         <div className='space-x-4 hidden md:block'>
-                            <Link to='/signup'>
-                                <button className='btn btn-secondary'>
-                                    Sign Up
+                            <Link to='/register'>
+                                <button className='btn btn-primary'>
+                                    Register
                                 </button>
                             </Link>
                             <Link to='/login'>
-                                <button className='btn btn-accent'>
+                                <button className='btn btn-secondary'>
                                     Login
                                 </button>
                             </Link>

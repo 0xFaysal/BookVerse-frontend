@@ -4,9 +4,14 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer";
 import {Helmet} from "react-helmet";
 import {useEffect, useState} from "react";
+import {ToastContainer} from "react-toastify";
+import {useMemo} from "react";
 
 function App() {
-    const svgUrls = ["/logo-1.svg", "/logo-2.svg", "/logo-3.svg"];
+    const svgUrls = useMemo(
+        () => ["/logo-1.svg", "/logo-2.svg", "/logo-3.svg"],
+        []
+    );
 
     const [currentSvg, setCurrentSvg] = useState(svgUrls[0]);
 
@@ -29,8 +34,10 @@ function App() {
                 <link rel='icon' type='image/svg+xml' href={currentSvg} />
                 <link rel='canonical' href='http://mysite.com/example' />
             </Helmet>
+
             <NavBar />
             <Outlet />
+            <ToastContainer />
             <Footer />
         </>
     );

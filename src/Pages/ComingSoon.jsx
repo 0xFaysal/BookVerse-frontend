@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import animation from "./../../assets/Animation.json";
+import animation from "./../assets/Animation.json";
 function ComingSoon() {
     return (
         <div className='h-96 w-full  mt-28 flex flex-col items-center justify-start'>

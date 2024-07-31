@@ -24,7 +24,8 @@ export default {
                     neutral: "#222831",
                     "neutral-content": "#ffffff",
                     "base-100": "#ffffff", // Full body background
-                    "base-200": "#c9e0d5", // Footer background
+                    "base-200": "#97ffcd", // Footer background
+                    "base-300": "#A7F3D0", // Card background
                     "base-content": "#060620",
                     error: "#FF3860",
                     "error-content": "#ffffff",
@@ -33,14 +34,15 @@ export default {
                     ...require("daisyui/src/theming/themes")["dark"],
                     primary: "#008170", // Navbar background
                     "primary-content": "#ffffff",
-                    secondary: "#005B41",
-                    "secondary-content": "#ffffff",
-                    accent: "#FEDE3A",
+                    secondary: "#FEDE3A",
+                    "secondary-content": "#000",
+                    accent: "#005B41",
                     "accent-content": "#000",
                     neutral: "#222831",
                     "neutral-content": "#ffffff",
                     "base-100": "#0F0F0F", // Full body background
                     "base-200": "#102317", // Footer background
+                    "base-300": "#064E3B", // Card background
                     "base-content": "#fff",
                     error: "#FF3860",
                     "error-content": "#ffffff",
