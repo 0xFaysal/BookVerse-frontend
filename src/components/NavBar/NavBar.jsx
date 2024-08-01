@@ -89,10 +89,10 @@ function Navbar() {
             {user ? (
                 <>
                     <li>
-                        <NavLink to={"/add_tourist_spot"}></NavLink>
+                        <NavLink to={"/add-book"}>Add Book</NavLink>
                     </li>
                     <li>
-                        <NavLink to={"/my_list"}>Borrowed Books</NavLink>
+                        <NavLink to={"/borrowed-book"}>Borrowed Books</NavLink>
                     </li>
                 </>
             ) : null}

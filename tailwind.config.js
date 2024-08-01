@@ -24,8 +24,8 @@ export default {
                     neutral: "#222831",
                     "neutral-content": "#ffffff",
                     "base-100": "#ffffff", // Full body background
-                    "base-200": "#97ffcd", // Footer background
-                    "base-300": "#A7F3D0", // Card background
+                    "base-200": "#e0fff0", // Footer background
+                    "base-300": "#A7F3D0", //Hero background
                     "base-content": "#060620",
                     error: "#FF3860",
                     "error-content": "#ffffff",
@@ -42,7 +42,7 @@ export default {
                     "neutral-content": "#ffffff",
                     "base-100": "#0F0F0F", // Full body background
                     "base-200": "#102317", // Footer background
-                    "base-300": "#064E3B", // Card background
+                    "base-300": "#064E3B", // Hero background
                     "base-content": "#fff",
                     error: "#FF3860",
                     "error-content": "#ffffff",

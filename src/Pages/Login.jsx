@@ -1,10 +1,58 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import bgimg from "/bg-login.svg";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {AuthContext} from "../Provider/AuthProvider";
+import {toast} from "react-toastify";
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
+    const {signInWithGoogle, signInWithGithub} = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    //Google Sign In
+    const handleGoogleSignIn = () => {
+        console.log("Google Sign In");
+        signInWithGoogle()
+            .then(() => {
+                if (location.state?.from) {
+                    navigate(location.state.from);
+                } else {
+                    navigate("/");
+                }
+            })
+            .catch(() => {
+                toast.error("Google Sign In Failed");
+                // console.log(error);
+            });
+    };
+
+    //Github Sign In
+    const handleGithubSignIn = () => {
+        console.log("Github Sign In");
+        signInWithGithub()
+            .then((result) => {
+                console.log(result);
+            })
+            .catch(() => {
+                toast.error("Github Sign In Failed");
+                // console.log(error);
+            });
+    };
+
+    // Form Submit
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        console.log("Form Submitted");
+        const form = new FormData(e.target);
+        const email = form.get("email");
+        const password = form.get("password");
+        console.log(email, password);
+    };
+
+    // Show password function
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -26,7 +74,10 @@ function Login() {
                         </h1>
                         <div className='w-full flex-1 mt-8'>
                             <div className='flex flex-col items-center'>
-                                <button className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'>
+                                <button
+                                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'
+                                    onClick={handleGoogleSignIn}
+                                >
                                     <div className='bg-white p-2 rounded-full'>
                                         <svg
                                             className='w-4'
@@ -55,7 +106,10 @@ function Login() {
                                     </span>
                                 </button>
 
-                                <button className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'>
+                                <button
+                                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
+                                    onClick={handleGithubSignIn}
+                                >
                                     <div className='bg-white p-1 rounded-full'>
                                         <svg
                                             className='w-6'
@@ -80,56 +134,61 @@ function Login() {
                             </div>
 
                             <div className='mx-auto max-w-xs'>
-                                <input
-                                    className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white text-black'
-                                    type='email'
-                                    placeholder='Email'
-                                />
-                                <div className='relative'>
+                                <form onSubmit={handleFormSubmit}>
                                     <input
-                                        className='w-full pl-6 pr-10 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 text-black placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                                        name='password'
-                                        type={
-                                            showPassword ? "text" : "password"
-                                        }
-                                        placeholder='Password'
-                                        required
+                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white text-black'
+                                        type='email'
+                                        placeholder='Email'
+                                        name='email'
                                     />
-                                    <div
-                                        onClick={handleShowPassword}
-                                        className='absolute top-1/2 translate-y-0 right-3 text-xl text-black'
-                                    >
-                                        {showPassword ? (
-                                            <FaEyeSlash />
-                                        ) : (
-                                            <FaEye />
-                                        )}
+                                    <div className='relative'>
+                                        <input
+                                            className='w-full pl-6 pr-10 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 text-black placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
+                                            name='password'
+                                            type={
+                                                showPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                            placeholder='Password'
+                                            required
+                                        />
+                                        <div
+                                            onClick={handleShowPassword}
+                                            className='absolute top-1/2 translate-y-0 right-3 text-xl text-black'
+                                        >
+                                            {showPassword ? (
+                                                <FaEyeSlash />
+                                            ) : (
+                                                <FaEye />
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                                <button className='mt-5 tracking-wide font-semibold bg-green-500 text-gray-100 w-full py-4 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'>
-                                    <svg
-                                        className='w-6 h-6 -ml-2'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        strokeWidth='2'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    >
-                                        <path d='M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2' />
-                                        <circle cx='8.5' cy='7' r='4' />
-                                        <path d='M20 8v6M23 11h-6' />
-                                    </svg>
-                                    <span className='ml-3'>Login</span>
-                                </button>
-                                <div className='mt-6 text-sm text-gray-600 text-center flex items-center justify-center gap-3'>
-                                    <p>Doesn&rsquo;t have an Account ?</p>
-                                    <Link
-                                        to='/register'
-                                        className='text-green-500 hover:text-green-700 font-bold text-lg underline'
-                                    >
-                                        Register
-                                    </Link>
-                                </div>
+                                    <button className='mt-5 tracking-wide font-semibold bg-green-500 text-gray-100 w-full py-4 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'>
+                                        <svg
+                                            className='w-6 h-6 -ml-2'
+                                            fill='none'
+                                            stroke='currentColor'
+                                            strokeWidth='2'
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                        >
+                                            <path d='M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2' />
+                                            <circle cx='8.5' cy='7' r='4' />
+                                            <path d='M20 8v6M23 11h-6' />
+                                        </svg>
+                                        <span className='ml-3'>Login</span>
+                                    </button>
+                                    <div className='mt-6 text-sm text-gray-600 text-center flex items-center justify-center gap-3'>
+                                        <p>Doesn&rsquo;t have an Account ?</p>
+                                        <Link
+                                            to='/register'
+                                            className='text-green-500 hover:text-green-700 font-bold text-lg underline'
+                                        >
+                                            Register
+                                        </Link>
+                                    </div>
+                                </form>
                                 <p className='mt-6 text-xs text-gray-600 text-center'>
                                     I agree to abide by templatana&rsquo;s
                                     <a
