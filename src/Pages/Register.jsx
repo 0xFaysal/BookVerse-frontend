@@ -2,24 +2,42 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import bgimg from "/bg-register.svg";
 import {useContext, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:5000";
 
 import {FaEye, FaEyeSlash, FaCheckCircle} from "react-icons/fa";
 import {AuthContext} from "../Provider/AuthProvider";
+import Title from "../components/Title";
 
 function Register() {
     const [imagePreview, setImagePreview] = useState(null);
-    const [password, setPassword] = useState("");
-    const [photourl, setPhotourl] = useState("");
+    // const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(false);
 
-    const {signInWithGoogle, signInWithGithub} = useContext(AuthContext);
+    const {
+        signInWithGoogle,
+        signInWithGithub,
+        RegisterWithEmailAndPassword,
+        updateProfile,
+    } = useContext(AuthContext);
 
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location);
 
+    //Image Preview
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                // 2MB in bytes
+                setErrorMessage(
+                    "File size exceeds 2MB. Please select a smaller file."
+                );
+                setImagePreview(null);
+                return;
+            }
+            console.log(file.size);
+            setErrorMessage(false);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);
@@ -49,10 +67,15 @@ function Register() {
     const handleGithubSignIn = () => {
         console.log("Github Sign In");
         signInWithGithub()
-            .then((result) => {
-                console.log(result);
+            .then(() => {
+                if (location.state?.from) {
+                    navigate(location.state.from);
+                } else {
+                    navigate("/");
+                }
             })
             .catch((error) => {
+                toast.error("Github Sign In Failed");
                 console.log(error);
             });
     };
@@ -64,15 +87,39 @@ function Register() {
         const form = new FormData(e.target);
         const name = form.get("name");
         const email = form.get("email");
-        const photo = form.get("photo");
-        console.log(typeof photo);
-        if (photo instanceof File) {
-            console.log("Photo is filePhoto");
-        } else {
-            console.log("Photo is URL");
-        }
-        console.log(name, email, photo, password);
-        toast.success("Form Submitted");
+        const password = form.get("password");
+        form.delete("password");
+        form.delete("name");
+        form.delete("email");
+
+        console.log(name, email, password);
+
+        axios
+            .post("/uploadUserPic", form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally((res) => {
+                console.log(res.data);
+                RegisterWithEmailAndPassword(email, password)
+                    .then(() => {
+                        updateProfile({
+                            name,
+                            photoURL: "http://localhost:5000/" + res.data.path,
+                        });
+                    })
+                    .catch((error) => {
+                        toast.error("Registration Failed");
+                        console.log(error);
+                    });
+            });
     };
 
     //Password validation
@@ -88,7 +135,7 @@ function Register() {
 
     const handlePassword = (e) => {
         const newPassword = e.target.value;
-        setPassword(newPassword);
+        // setPassword(newPassword);
         if (newPassword.match(/[A-Z]/)) {
             setPassUpperCase(true);
         } else {
@@ -108,6 +155,7 @@ function Register() {
 
     return (
         <section className='h-screen w-full'>
+            <Title title='Register | ' />
             <div className='max-w-full m-0 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div>
@@ -205,22 +253,18 @@ function Register() {
                                             accept='image/*'
                                             onChange={handleImageChange}
                                             className='w-full px-6 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 transition placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white text-black mt-5 focus:w-4/5 disabled:opacity-10'
-                                            required={photourl ? false : true}
-                                            disabled={photourl ? true : false}
+                                            required
                                         />
                                     </div>
+                                    {errorMessage && (
+                                        <div>
+                                            <h1 className='font-medium text-red-600'>
+                                                {errorMessage}
+                                            </h1>
+                                        </div>
+                                    )}
+                                    {console.log(errorMessage)}
 
-                                    <input
-                                        disabled={imagePreview}
-                                        required={imagePreview ? false : true}
-                                        name='photo'
-                                        onChange={(e) =>
-                                            setPhotourl(e.target.value)
-                                        }
-                                        className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white text-black mt-5 disabled:opacity-10'
-                                        type='text'
-                                        placeholder='Photo URL'
-                                    />
                                     <input
                                         className='w-full px-6 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white text-black mt-5'
                                         type='email'
@@ -241,7 +285,7 @@ function Register() {
                                             onFocus={() =>
                                                 setPasswordFocus(true)
                                             }
-                                            onKeyUp={handlePassword}
+                                            onChange={handlePassword}
                                             required
                                         />
                                         <div

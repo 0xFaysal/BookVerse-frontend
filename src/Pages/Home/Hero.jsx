@@ -23,11 +23,11 @@ function Hero() {
                 snowflakeCount={60}
                 snowflakeStyle={{fontSize: "20px"}}
             />
-            <div className='w-3/4 h-fit  text-center relative mt-48 mb-6'>
-                <h1 className='text-6xl font-black font-roboto hero-h1 capitalize z-50 relative'>
+            <div className='w-3/4 h-fit  text-center relative mt-48 mb-6 flex flex-col items-center'>
+                <h1 className='text-5xl md:text-6xl font-black font-roboto hero-h1 capitalize z-50 relative'>
                     Read, Share , and Inspire: Unleash Your Literary Journey
                 </h1>
-                <p className=' font-roboto font-medium text-lg mt-4 leading-8 tracking-wide z-50 relative select-none'>
+                <p className=' font-roboto font-medium text-lg mt-10 leading-8 tracking-wide z-50 relative select-none'>
                     Dive into Bookverse, the ultimate library management system
                     and book-sharing platform. Here, every page turns into a new
                     adventure, connecting readers and igniting imaginations.
@@ -36,14 +36,16 @@ function Hero() {
                     endless journey of literary exploration.
                 </p>
 
-                <button className='bg-primary text-white font-raleway font-semibold text-xl mt-8 py-3 px-4 rounded-lg hover:outline outline-offset-1 outline-primary relative z-50 shadow-md'>
-                    Explore Now
-                </button>
-                <button className='border-secondary border-2 box-border text-secondary font-raleway ml-4 font-semibold text-xl mt-8 py-3 px-4 rounded-lg hover:outline outline-offset-1 outline-secondary relative z-50 shadow'>
-                    Learn More
-                </button>
+                <div className=' mt-16 flex flex-col md:flex-row gap-4'>
+                    <button className='bg-primary text-white font-raleway font-semibold text-xl py-3 px-4 rounded-lg hover:outline outline-offset-1 outline-primary relative z-50 shadow-md'>
+                        Explore Now
+                    </button>
+                    <button className='border-secondary border-2 box-border text-secondary font-raleway font-semibold text-xl py-3 px-4 rounded-lg hover:outline outline-offset-1 outline-secondary relative z-50 shadow'>
+                        Learn More
+                    </button>
+                </div>
             </div>
-            <div className=' relative w-11/12 mb-20 flex justify-between '>
+            <div className=' relative w-full md:w-11/12 mb-20 flex justify-between '>
                 <div className='mt-28'>
                     <Marquee
                         gradient={true}

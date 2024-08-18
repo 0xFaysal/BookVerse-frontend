@@ -146,7 +146,7 @@ function Navbar() {
                     </Link>
                 </div>
                 <div className='navbar-center hidden lg:flex'>
-                    <ul className='flex gap-6 navLink font-medium text-base px-1'>
+                    <ul className='flex gap-6  navLink font-medium text-base px-1'>
                         {navItem}
                     </ul>
                 </div>
@@ -229,7 +229,7 @@ function Navbar() {
                         </div>
                         <ul
                             tabIndex={0}
-                            className='menu-my relative right-0 menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
+                            className='menu-my menu-li relative right-0 menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-sm w-52'
                         >
                             {navItem}
                             {!user ? (

@@ -4,6 +4,7 @@ import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useContext, useState} from "react";
 import {AuthContext} from "../Provider/AuthProvider";
 import {toast} from "react-toastify";
+import Title from "../components/Title";
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -59,6 +60,7 @@ function Login() {
 
     return (
         <section className='h-screen w-full overflow-hidden'>
+            <Title title='Login | ' />
             <div className='max-w-full m-0 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div>

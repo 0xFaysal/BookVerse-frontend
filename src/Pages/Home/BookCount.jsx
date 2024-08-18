@@ -4,7 +4,7 @@ import {FaBookOpen, FaUserPlus} from "react-icons/fa6";
 function BookCount() {
     return (
         <div className='flex items-center justify-center mb-24 mt-8'>
-            <div className='stats shadow flex gap-28 bg-base-200'>
+            <div className='stats shadow stats-vertical md:stats-horizontal flex flex-col md:flex-row gap-7 md:gap-14 lg:gap-28 bg-base-200'>
                 <div className='stat'>
                     <div className='stat-figure text-secondary'>
                         <TbUsersGroup className='inline-block h-8 w-8 stroke-current' />

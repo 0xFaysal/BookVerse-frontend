@@ -17,8 +17,8 @@ import img10 from "/type-10.webp";
 
 function BookType() {
     return (
-        <section className='w-4/5 min-h-96 mx-auto mt-32'>
-            <h1 className='font-bold text-3xl font-raleway capitalize mb-4 ml-2'>
+        <section className='w-[98%] md:w-4/5 min-h-96 mx-auto mt-32'>
+            <h1 className='font-bold text-3xl font-raleway text-center md:text-left capitalize mb-4 ml-2'>
                 Book Category
             </h1>
             <Swiper
@@ -51,13 +51,13 @@ function BookType() {
                 }}
             >
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img1} alt='Novel Book Cover' />
                         <h2 className='font-bold text-lg '>Novel</h2>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img2} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>
                             Self-Help, Motivational
@@ -65,7 +65,7 @@ function BookType() {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img3} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>
                             Poems and Recitation
@@ -73,7 +73,7 @@ function BookType() {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img4} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>
                             Science & Technology
@@ -81,19 +81,19 @@ function BookType() {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img5} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>Travel</h2>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img6} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>Science Fiction</h2>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img7} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>
                             History and Tradition
@@ -101,13 +101,13 @@ function BookType() {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img8} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>Children & Teens</h2>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img9} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>
                             Thriller and Adventure
@@ -115,7 +115,7 @@ function BookType() {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className='w-72 bg-base-200 pb-4 p-2'>
+                    <div className='min-w-56 bg-base-200 pb-4 p-2'>
                         <img src={img10} alt='Book Cover' />
                         <h2 className='font-bold text-lg '>Articles</h2>
                     </div>
