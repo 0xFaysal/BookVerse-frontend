@@ -3,12 +3,16 @@ import bgimg from "/bg-login.svg";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useContext, useState} from "react";
 import {AuthContext} from "../Provider/AuthProvider";
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import Title from "../components/Title";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.withCredentials = true;
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
-    const {signInWithGoogle, signInWithGithub} = useContext(AuthContext);
+    const {signInWithGoogle, signInWithGithub, loginWithEmailAndPassword} =
+        useContext(AuthContext);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,12 +21,27 @@ function Login() {
     const handleGoogleSignIn = () => {
         console.log("Google Sign In");
         signInWithGoogle()
-            .then(() => {
-                if (location.state?.from) {
-                    navigate(location.state.from);
-                } else {
-                    navigate("/");
-                }
+            .then((userInfo) => {
+                axios
+                    .post("/login", {
+                        name: userInfo.user.displayName,
+                        email: userInfo.user.email,
+                        uId: userInfo.user.uid,
+                        metadata: userInfo.user.metadata,
+                    })
+                    .then(() => {
+                        toast.success("Registration Successful");
+
+                        if (location.state?.from) {
+                            navigate(location.state.from);
+                        } else {
+                            navigate("/");
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error("Cookies Failed");
+                        console.log("Error on login cookies:", error);
+                    });
             })
             .catch(() => {
                 toast.error("Google Sign In Failed");
@@ -34,8 +53,27 @@ function Login() {
     const handleGithubSignIn = () => {
         console.log("Github Sign In");
         signInWithGithub()
-            .then((result) => {
-                console.log(result);
+            .then((userInfo) => {
+                axios
+                    .post("/login", {
+                        name: userInfo.user.displayName,
+                        email: userInfo.user.email,
+                        uId: userInfo.user.uid,
+                        metadata: userInfo.user.metadata,
+                    })
+                    .then(() => {
+                        toast.success("Registration Successful");
+
+                        if (location.state?.from) {
+                            navigate(location.state.from);
+                        } else {
+                            navigate("/");
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error("Cookies Failed");
+                        console.log("Error on login cookies:", error);
+                    });
             })
             .catch(() => {
                 toast.error("Github Sign In Failed");
@@ -51,6 +89,43 @@ function Login() {
         const email = form.get("email");
         const password = form.get("password");
         console.log(email, password);
+        loginWithEmailAndPassword(email, password)
+            .then((userInfo) => {
+                axios
+                    .post("/login", {
+                        name: userInfo.user.displayName,
+                        email: userInfo.user.email,
+                        uId: userInfo.user.uid,
+                        metadata: userInfo.user.metadata,
+                    })
+                    .then(() => {
+                        toast.success("Registration Successful");
+
+                        if (location.state?.from) {
+                            navigate(location.state.from);
+                        } else {
+                            navigate("/");
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error("Cookies Failed");
+                        console.log("Error on login cookies:", error);
+                    });
+            })
+            .catch((error) => {
+                switch (error.code) {
+                    case "auth/invalid-credential":
+                        toast.error("Invalid Credential");
+                        break;
+                    case "auth/too-many-requests":
+                        toast.error("Too many requests");
+                        break;
+                    default:
+                        toast.error("Login Failed");
+                        break;
+                }
+                // console.log(error.code);
+            });
     };
 
     // Show password function
@@ -220,6 +295,7 @@ function Login() {
                     ></div>
                 </div>
             </div>
+            <ToastContainer />
         </section>
     );
 }

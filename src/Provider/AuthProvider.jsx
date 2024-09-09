@@ -9,6 +9,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
+    updateProfile,
 } from "firebase/auth";
 import {app} from "../Firebase/config";
 
@@ -43,8 +44,11 @@ function AuthProvider({children}) {
     };
 
     // Update the user profile
-    const updateProfile = (data) => {
-        return updateProfile(auth.currentUser, data);
+    const updateInfo = (displayName, photoURL) => {
+        return updateProfile(auth.currentUser, {
+            displayName: displayName,
+            photoURL: photoURL,
+        });
     };
     // Sign in with email and password
     const loginWithEmailAndPassword = (email, password) => {
@@ -68,7 +72,7 @@ function AuthProvider({children}) {
 
     const data = {
         RegisterWithEmailAndPassword,
-        updateProfile,
+        updateInfo,
         user,
         loginWithEmailAndPassword,
         signOutUser,

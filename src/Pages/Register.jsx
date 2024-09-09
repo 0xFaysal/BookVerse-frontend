@@ -4,6 +4,7 @@ import {useContext, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.withCredentials = true;
 
 import {FaEye, FaEyeSlash, FaCheckCircle} from "react-icons/fa";
 import {AuthContext} from "../Provider/AuthProvider";
@@ -18,7 +19,7 @@ function Register() {
         signInWithGoogle,
         signInWithGithub,
         RegisterWithEmailAndPassword,
-        updateProfile,
+        updateInfo,
     } = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -50,12 +51,27 @@ function Register() {
     const handleGoogleSignIn = () => {
         console.log("Google Sign In");
         signInWithGoogle()
-            .then(() => {
-                if (location.state?.from) {
-                    navigate(location.state.from);
-                } else {
-                    navigate("/");
-                }
+            .then((userInfo) => {
+                axios
+                    .post("/login", {
+                        name: userInfo.user.displayName,
+                        email: userInfo.user.email,
+                        uId: userInfo.user.uid,
+                        metadata: userInfo.user.metadata,
+                    })
+                    .then(() => {
+                        toast.success("Registration Successful");
+
+                        if (location.state?.from) {
+                            navigate(location.state.from);
+                        } else {
+                            navigate("/");
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error("Cookies Failed");
+                        console.log("Error on login cookies:", error);
+                    });
             })
             .catch((error) => {
                 toast.error("Google Sign In Failed");
@@ -67,12 +83,28 @@ function Register() {
     const handleGithubSignIn = () => {
         console.log("Github Sign In");
         signInWithGithub()
-            .then(() => {
-                if (location.state?.from) {
-                    navigate(location.state.from);
-                } else {
-                    navigate("/");
-                }
+            .then((userInfo) => {
+                console.log(userInfo);
+                axios
+                    .post("/login", {
+                        name: userInfo.user.displayName,
+                        email: userInfo.user.email,
+                        uId: userInfo.user.uid,
+                        metadata: userInfo.user.metadata,
+                    })
+                    .then(() => {
+                        toast.success("Registration Successful");
+
+                        if (location.state?.from) {
+                            navigate(location.state.from);
+                        } else {
+                            navigate("/");
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error("Cookies Failed");
+                        console.log("Error on login cookies:", error);
+                    });
             })
             .catch((error) => {
                 toast.error("Github Sign In Failed");
@@ -101,24 +133,48 @@ function Register() {
                 },
             })
             .then((res) => {
-                console.log(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally((res) => {
-                console.log(res.data);
+                console.log(res.data.path);
+
                 RegisterWithEmailAndPassword(email, password)
-                    .then(() => {
-                        updateProfile({
+                    .then((userInfo) => {
+                        console.log(userInfo);
+
+                        updateInfo(
                             name,
-                            photoURL: "http://localhost:5000/" + res.data.path,
+                            `http://localhost:5000/${res.data.path}`
+                        ).catch((error) => {
+                            console.log("Error on update :", error);
                         });
+
+                        axios
+                            .post("/login", {
+                                email,
+                                uId: userInfo.user.uid,
+                                name: userInfo.user.displayName,
+                                metadata: userInfo.user.metadata,
+                            })
+                            .then(() => {
+                                toast.success("Registration Successful");
+
+                                if (location.state?.from) {
+                                    navigate(location.state.from);
+                                } else {
+                                    navigate("/");
+                                }
+                            })
+                            .catch((error) => {
+                                toast.error("Cookies Failed");
+                                console.log("Error on login cookies:", error);
+                            });
                     })
                     .catch((error) => {
                         toast.error("Registration Failed");
                         console.log(error);
                     });
+            })
+
+            .catch((error) => {
+                console.log("Image Upload fail:", error);
             });
     };
 

@@ -235,9 +235,9 @@ function Navbar() {
                             {!user ? (
                                 <>
                                     <li className='w-full'>
-                                        <Link to='/signup' className='w-full'>
+                                        <Link to='/register' className='w-full'>
                                             <button className='w-full px-3 py-4 rounded-lg bg-secondary'>
-                                                Sign Up
+                                                Register
                                             </button>
                                         </Link>
                                     </li>
