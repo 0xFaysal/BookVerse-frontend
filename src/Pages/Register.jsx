@@ -2,9 +2,9 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import bgimg from "/bg-register.svg";
 import {useContext, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:5000";
-axios.defaults.withCredentials = true;
+// import axios from "axios";
+// axios.defaults.baseURL = "http://localhost:5000";
+// axios.defaults.withCredentials = true;
 
 import {FaEye, FaEyeSlash, FaCheckCircle} from "react-icons/fa";
 import {AuthContext} from "../Provider/AuthProvider";
@@ -20,6 +20,7 @@ function Register() {
         signInWithGithub,
         RegisterWithEmailAndPassword,
         updateInfo,
+        axios,
     } = useContext(AuthContext);
 
     const navigate = useNavigate();

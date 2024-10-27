@@ -5,14 +5,18 @@ import {useContext, useState} from "react";
 import {AuthContext} from "../Provider/AuthProvider";
 import {toast, ToastContainer} from "react-toastify";
 import Title from "../components/Title";
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:5000";
-axios.defaults.withCredentials = true;
+// import axios from "axios";
+// axios.defaults.baseURL = "http://localhost:5000";
+// axios.defaults.withCredentials = true;
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
-    const {signInWithGoogle, signInWithGithub, loginWithEmailAndPassword} =
-        useContext(AuthContext);
+    const {
+        signInWithGoogle,
+        signInWithGithub,
+        loginWithEmailAndPassword,
+        axios,
+    } = useContext(AuthContext);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,10 +26,12 @@ function Login() {
         console.log("Google Sign In");
         signInWithGoogle()
             .then((userInfo) => {
+                console.log(userInfo);
                 axios
                     .post("/login", {
                         name: userInfo.user.displayName,
                         email: userInfo.user.email,
+                        profilePic: userInfo.user.photoURL,
                         uId: userInfo.user.uid,
                         metadata: userInfo.user.metadata,
                     })

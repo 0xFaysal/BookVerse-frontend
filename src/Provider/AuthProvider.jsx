@@ -12,6 +12,9 @@ import {
     updateProfile,
 } from "firebase/auth";
 import {app} from "../Firebase/config";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.withCredentials = true;
 
 export const AuthContext = createContext(null);
 
@@ -32,6 +35,9 @@ function AuthProvider({children}) {
             } else {
                 setUser(null);
                 console.log("User is signed out");
+                axios.get("/logout").then((res) => {
+                    console.log(res.data);
+                });
             }
         });
 
@@ -80,6 +86,7 @@ function AuthProvider({children}) {
         signInWithGithub,
         theme,
         setTheme,
+        axios,
     };
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 }
