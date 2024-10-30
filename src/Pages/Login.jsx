@@ -46,7 +46,7 @@ function Login() {
                     })
                     .catch((error) => {
                         toast.error("Cookies Failed");
-                        console.log("Error on login cookies:", error);
+                        console.log("Error on login cookies : ", error);
                     });
             })
             .catch(() => {
